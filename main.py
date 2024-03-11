@@ -1,13 +1,17 @@
 import sys
+import jieba
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
+#对中文字段进行分词
+def tokenize_zh(text):
+    return list(jieba.cut(text,cut_all=False))
 
 
 def calculate_repeat_rate(orig, orig_add):
 
-
     # 使用TF-IDF向量化器将文本转换为向量
-    vectorizer = TfidfVectorizer()
+    vectorizer = TfidfVectorizer(tokenizer=tokenize_zh, lowercase=False)
     tfidf_matrix = vectorizer.fit_transform([orig, orig_add])
 
     # 计算两个文本之间的余弦相似度
