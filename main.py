@@ -4,8 +4,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import time
 import pytest
+import cProfile
+import os
 
-@pytest.mark.benchmark(min_rounds=10)
 
 #对中文字段进行分词
 def tokenize_zh(text):
@@ -25,6 +26,13 @@ def calculate_repeat_rate(orig, orig_add):
 
 def solve(orig,orig_add,ans):
 
+    #判断三个文件是否存在
+    if os.path.exists(orig) and os.path.exists(orig_add) and os.path.exists(ans):
+        pass
+    else:
+        print("存在文件无法打开")
+        sys.exit(1)
+
     # 读取原文
     with open(orig, 'r', encoding='utf-8') as f:
         orig_text = f.read()
@@ -32,6 +40,7 @@ def solve(orig,orig_add,ans):
     # 读取抄袭文本
     with open(orig_add, 'r', encoding='utf-8') as f:
         orig_add_text = f.read()
+
 
     # 计算查重率
     repeat_rate = calculate_repeat_rate(orig_text, orig_add_text)
