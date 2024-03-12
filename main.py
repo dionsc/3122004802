@@ -23,31 +23,27 @@ def calculate_repeat_rate(orig, orig_add):
 
     return similarity
 
-if __name__ == "__main__":
-    start_time = time.time()
-    if len(sys.argv) != 4:
-        print("命令行参数格式错误，正确格式: python main.py <orig> <orig_add> <ans>")
-        sys.exit(1)
+def solve(orig,orig_add,ans):
 
-    orig = sys.argv[1]
-    orig_add = sys.argv[2]
-    ans = sys.argv[3]
-
-    #读取原文
+    # 读取原文
     with open(orig, 'r', encoding='utf-8') as f:
         orig_text = f.read()
 
-    #读取抄袭文本
+    # 读取抄袭文本
     with open(orig_add, 'r', encoding='utf-8') as f:
         orig_add_text = f.read()
 
-    #计算查重率
+    # 计算查重率
     repeat_rate = calculate_repeat_rate(orig_text, orig_add_text)
 
-    #将查重率输出到答案文件
+    # 将查重率输出到答案文件
     with open(ans, 'w', encoding='utf-8') as f:
-        f.write(f"{repeat_rate:.2f}\n")
+        f.write("{:.2f}".format(int(repeat_rate*100)/100))
 
 
-    end_time = time.time()
-    print(end_time - start_time)
+
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("命令行参数格式错误，正确格式: python main.py <orig> <orig_add> <ans>")
+        sys.exit(1)
+    solve(sys.argv[1],sys.argv[2],sys.argv[3])
