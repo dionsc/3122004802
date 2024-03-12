@@ -6,6 +6,8 @@ import time
 import pytest
 import cProfile
 import os
+from line_profiler import LineProfiler
+
 
 
 #对中文字段进行分词
